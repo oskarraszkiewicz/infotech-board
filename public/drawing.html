@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>infotechboard</title>
+    <link href="style.css" rel="stylesheet"/>
+    <link href="assets/logo.png" rel="icon" type="image/x-icon"/>
+    <script src="socket.io/socket.io.js"></script>
+    <script defer src="main.js" type="module"></script>
+</head>
+<body>
+<style id="tmpStyle">
+    .editorRequired, .adminRequired {
+        display: none;
+    }
+</style>
+<input class="hidden" id="fileUploadInput" type="file">
+<div id="canvasContainer">
+    <div class="editorRequired" id="previewDot"></div>
+    <object id="canvas"></object>
+</div>
+<div class="header">
+    <div class="space-between">
+        <div class="headerMetadata center">
+            <a href="index.html">
+                <img alt="Logo" src="assets/logo.png">
+            </a>
+            <p class="desktopRequired" id="boardName">Tablica bez nazwy</p>
+            <div class="svgButton mobileRequired" id="editBoardNameBtn">
+                <img alt="Name" src="assets/name.svg">
+            </div>
+            <input class="hidden" id="boardNameInput"/>
+        </div>
+        <div class="collaborationContainer center">
+            <div class="slideSwitcher">
+                <div class="ssInline">
+                    <div class="svgButton" id="prevSlideBtn">
+                        <img alt="Previous" src="assets/left.svg"/>
+                    </div>
+                    <div class="currentSlideIndicator">
+                        <span id="csiCurrent">0</span>
+                        /
+                        <span id="csiMax">0</span>
+                    </div>
+                    <div class="svgButton" id="nextSlideBtn">
+                        <img alt="Next" src="assets/right.svg"/>
+                    </div>
+                    <div class="svgButton editorRequired" id="deleteSlideBtn">
+                        <img alt="Delete" src="assets/delete.svg"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="collaborationPeople">
+            <div id="peopleBarButtons">
+                <div class="svgButton" id="peopleBtn">
+                    <img alt="Edytorzy" src="assets/person.svg"/>
+                </div>
+                <label for="peopleBtn" id="peopleCount">0</label>
+            </div>
+            <button class="logoutBtn">
+                Wyloguj
+            </button>
+        </div>
+    </div>
+    <div class="toolOptions editorRequired">
+        <div class="hidden colorParams">
+            <input id="colorInput" type="color"/>
+        </div>
+        <div class="hidden strokeColorParams">
+            <input id="strokeColorInput" type="color"/>
+        </div>
+        <div class="hidden strokeWidthParams">
+            <input id="strokeWidthInput" min="0" type="number" value="0"/>
+        </div>
+        <div class="hidden opacityParams">
+            <input id="opacityInput" max="10" min="1" type="range" value="10">
+        </div>
+        <div class="hidden textSizeParams">
+            <input id="textSizeInput" max="180" min="4" type="range" value="18">
+        </div>
+        <div class="hidden deleteParams">
+            <img alt="Delete" class="svgIcon" id="deleteElementBtn" src="assets/delete.svg"/>
+        </div>
+    </div>
+</div>
+<div class="toolSelection editorRequired">
+    <div class="toolSelect" id="tool_0">
+        <img alt="Select Tool" src="assets/select.svg"/>
+    </div>
+    <div class="toolSelect" id="tool_1">
+        <img alt="Pen" src="assets/pen.svg"/>
+    </div>
+    <div class="toolSelect" id="tool_2">
+        <img alt="Rectangle" src="assets/rect.svg"/>
+    </div>
+    <div class="toolSelect" id="tool_3">
+        <img alt="Ellipse" src="assets/circle.svg"/>
+    </div>
+    <div class="toolSelect" id="tool_4">
+        <img alt="Rubber" src="assets/rubber.svg"/>
+    </div>
+    <div class="toolSelect" id="tool_5">
+        <img alt="Rubber" src="assets/text.svg"/>
+    </div>
+    <div class="toolSelect" id="tool_6">
+        <img alt="Image" src="assets/image.svg"/>
+    </div>
+</div>
+<div class="modal hidden" id="authModal">
+    <div class="modalOverlay">
+        <div class="modalContent">
+            <h1>Zaloguj się</h1>
+            <p>Wejdź jako gość lub zaloguj się przez konto Google.</p>
+            <p>
+                <label for="authUsername">Nazwa: </label>
+                <input id="authUsername" type="text"/>
+            </p>
+            <p class="buttonsFlex">
+                <button disabled id="logAsGuest">Zaloguj jako gość</button>
+                <button class="googleBtn" id="logWithGoogle">
+                    <img alt="Google" src="assets/google.svg"/>Zaloguj przez Google
+                </button>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="modal hidden" id="authFailedModal">
+    <div class="modalOverlay">
+        <div class="modalContent">
+            <h1>Nie masz uprawnień</h1>
+            <p>Nie masz uprawnień do wyświetlania tej tablicy.</p>
+            <p class="buttonsFlex">
+                <button class="logoutBtn">
+                    Wyloguj
+                </button>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="modal hidden" id="peopleModal">
+    <div class="modalOverlay">
+        <div class="modalContent">
+            <h1>Udostępnianie</h1>
+            <div class="adminRequired" id="sharingAddInput">
+                <input id="sharingMatcherInput" placeholder="Adres e-mail lub domena (część po @)" type="text"/>
+                <button id="shareSubmit">Dodaj</button>
+            </div>
+            <ul id="membersList"></ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

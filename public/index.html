@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>infotechboard</title>
+    <link href="style.css" rel="stylesheet"/>
+    <link rel="icon" href="assets/logo.png" type="image/x-icon" />
+    <script defer src="main.js" type="module"></script>
+</head>
+<body id="indexView">
+<style id="tmpStyle"></style>
+<p id="loggedInAs"></p>
+<h1>Ostatnie tablice</h1>
+<button class="logoutBtn">Wyloguj</button>
+<button class="addNewBoard requiresLogin">Utwórz</button>
+<div id="latestBoards">
+    <div class="modal hidden" id="authModal">
+        <div class="modalOverlay">
+            <div class="modalContent">
+                <h1>Zaloguj się</h1>
+                <p>Wejdź jako gość lub zaloguj się przez konto Google.</p>
+                <p>
+                    <label for="authUsername">Nazwa: </label>
+                    <input id="authUsername" type="text"/>
+                </p>
+                <p class="buttonsFlex">
+                    <button disabled id="logAsGuest">Zaloguj jako gość</button>
+                    <button class="googleBtn" id="logWithGoogle">
+                        <img alt="Google" src="assets/google.svg"/>Zaloguj przez Google
+                    </button>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="modal hidden" id="anonNotAllowedModal">
+        <div class="modalOverlay">
+            <div class="modalContent">
+                <h1>Zalogowano jako gość</h1>
+                <p>Możesz utworzyć nową tablicę, ale nie możesz przeglądać swoich ostatnich tablic.</p>
+                <p class="buttonsFlex">
+                    <button class="addNewBoard">
+                        Utwórz
+                    </button>
+                    <button class="logoutBtn">
+                        Wyloguj
+                    </button>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
